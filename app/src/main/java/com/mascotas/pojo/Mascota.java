@@ -7,14 +7,30 @@ import android.os.Parcelable;
  * Created by DESARROLLO2 on 30/05/2016.
  */
 public class Mascota implements Parcelable {
+    private int id;
     private String nombre;
     private int likes;
     private int foto;
 
-    public Mascota(String nombre,int likes,int foto){
+
+    public Mascota(){
+
+    }
+
+    public Mascota(int id,String nombre,int likes,int foto,int votos){
+        this.id = id;
         this.nombre = nombre;
         this.likes = likes;
         this.foto = foto;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -26,7 +42,6 @@ public class Mascota implements Parcelable {
     }
 
     public int getLikes() {
-        System.out.println("likes: " + likes);
         return likes;
     }
 
@@ -42,11 +57,11 @@ public class Mascota implements Parcelable {
         this.foto = foto;
     }
 
-        private Mascota(Parcel in) {
+    private Mascota(Parcel in) {
+            id = in.readInt();
             nombre = in.readString();
             likes = in.readInt();
             foto = in.readInt();
-
         }
 
         @Override
@@ -57,7 +72,7 @@ public class Mascota implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-
+            dest.writeInt(id);
             dest.writeString(nombre);
             dest.writeInt(likes);
             dest.writeInt(foto);

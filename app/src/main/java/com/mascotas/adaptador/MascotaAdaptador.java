@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mascotas.db.ConstructorMascotas;
 import com.mascotas.pojo.Mascota;
 import com.mascotas.R;
 
@@ -31,7 +32,6 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
 
     @Override
     public MascotaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_mascota, parent, false);
 
         return new MascotaViewHolder(view);
@@ -46,24 +46,14 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
         holder.likes.setText(String.valueOf(mascota.getLikes()));
         holder.bLike.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(mascota.getLikes() < 1) {
-                    mascota.setLikes(mascota.getLikes() + 1);
-                    holder.likes.setText(String.valueOf(mascota.getLikes()));
-                    ingresarFavoritos(mascota);
-                }
+                    ConstructorMascotas constructorMascotas = new ConstructorMascotas(activity);
+                    constructorMascotas.darLikeMascota(mascota);
+                    String likes = String.valueOf(constructorMascotas.obtenerLikesMascota(mascota));
+
+                    holder.likes.setText(likes);
+
             }
         });
-    }
-
-    public void ingresarFavoritos(Mascota mascota){
-        if(favoritas.size()<6) {
-            favoritas.add(mascota);
-            System.out.println("--------------------se agregó favorita");
-        }
-        else {
-            favoritas.remove(0);
-            favoritas.add(mascota);
-        }
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.mascotas.adaptador.MascotaAdaptador;
+import com.mascotas.db.ConstructorMascotas;
 import com.mascotas.pojo.Mascota;
 
 import java.util.ArrayList;
@@ -44,8 +45,12 @@ public class Main2Activity extends AppCompatActivity {
         llm.setStackFromEnd(true);
 
         listaMascotas.setLayoutManager(llm);
-        mascotas =  getIntent().getParcelableArrayListExtra("lista");
-        favoritas =  getIntent().getParcelableArrayListExtra("favoritas");
+
+        ConstructorMascotas constructorMascotas = new ConstructorMascotas(this);
+        favoritas = constructorMascotas.obtenerFavoritas();
+        System.out.println("tamaño de las favoritas: " + favoritas.size());
+
+        mascotas = getIntent().getParcelableArrayListExtra("mascotas");
 
         if(favoritas != null)
             inicializarAdaptador();
